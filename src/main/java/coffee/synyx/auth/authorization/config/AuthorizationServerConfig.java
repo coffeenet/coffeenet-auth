@@ -4,6 +4,8 @@ import org.slf4j.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+
 import org.springframework.context.annotation.Configuration;
 
 import org.springframework.security.authentication.AuthenticationManager;
@@ -13,6 +15,7 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Aut
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.approval.ApprovalStore;
 import org.springframework.security.oauth2.provider.token.AccessTokenConverter;
+import org.springframework.security.oauth2.provider.token.AuthorizationServerTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 
 import javax.sql.DataSource;
@@ -49,16 +52,19 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     private final TokenStore tokenStore;
     private final AccessTokenConverter accessTokenConverter;
     private final ApprovalStore approvalStore;
+    private final AuthorizationServerTokenServices tokenService;
 
     @Autowired
     public AuthorizationServerConfig(AuthenticationManager authenticationManager, DataSource dataSource,
-        TokenStore tokenStore, AccessTokenConverter accessTokenConverter, ApprovalStore approvalStore) {
+        TokenStore tokenStore, AccessTokenConverter accessTokenConverter, ApprovalStore approvalStore,
+        AuthorizationServerTokenServices tokenService) {
 
         this.authenticationManager = authenticationManager;
         this.dataSource = dataSource;
         this.tokenStore = tokenStore;
         this.accessTokenConverter = accessTokenConverter;
         this.approvalStore = approvalStore;
+        this.tokenService = tokenService;
 
         LOGGER.info("//> OAuth2AuthorizationServerConfig ...");
     }
@@ -66,7 +72,8 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception { // NOSONAR
 
-        endpoints.tokenStore(tokenStore)
+        endpoints.tokenServices(tokenService)
+            .tokenStore(tokenStore)
             .accessTokenConverter(accessTokenConverter)
             .approvalStore(approvalStore)
             .authenticationManager(authenticationManager);

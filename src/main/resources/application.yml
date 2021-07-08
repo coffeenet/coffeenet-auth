@@ -23,6 +23,9 @@ auth:
     connection-with-tls: false
     bindDn:
     bindPassword:
+  token:
+    access-token-validity-seconds: 3600
+    refresh-token-validity-seconds: 43200
 
 server:
   port: 9999

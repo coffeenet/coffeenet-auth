@@ -141,7 +141,7 @@ public class AuthClientController {
 
         AuthClientDto authClientDto = new AuthClientDto();
         authClientDto.setScope("openid");
-        authClientDto.setAuthorizedGrantTypes("authorization_code,password,client_credentials");
+        authClientDto.setAuthorizedGrantTypes("authorization_code,password,client_credentials,refresh_token");
         authClientDto.setAuthorities("");
         authClientDto.setResourceIds(null);
         authClientDto.setAccessTokenValidity(null);

@@ -52,7 +52,7 @@ public class DevelopmentAuthClientConfiguration {
             authClient.setClientId(coffeeNetClient);
             authClient.setClientSecret("coffeeNetClientSecret");
             authClient.getAuthorizedGrantTypes()
-                .addAll(asList("authorization_code", "password", "client_credentials"));
+                .addAll(asList("authorization_code", "password", "client_credentials", "refresh_token"));
             authClient.getScope().add("openid");
             jdbcClientDetailsService.addClientDetails(authClient);
 

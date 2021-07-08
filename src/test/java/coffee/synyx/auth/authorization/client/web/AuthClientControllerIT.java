@@ -208,7 +208,7 @@ public class AuthClientControllerIT {
         resultActions.andExpect(model().attributeExists("client"));
         resultActions.andExpect(model().attribute("client", hasProperty("scope", is("openid"))));
         resultActions.andExpect(model().attribute("client",
-                hasProperty("authorizedGrantTypes", is("authorization_code,password,client_credentials"))));
+                hasProperty("authorizedGrantTypes", is("authorization_code,password,client_credentials,refresh_token"))));
         resultActions.andExpect(model().attribute("client", hasProperty("authorities", is(""))));
     }
 
